@@ -1,2 +1,5 @@
-# TFM
-Trabajo Fin de Máster
+# Trabajo Fin de Máster
+
+En este repositorio puede consultarse el código desarrollado para el Trabajo Fin de Máster DATCOM, el cual es una actualización del [Trabajo Fin de Grado](https://github.com/laurahernandezm/TFG). Se trata de un sistema completo de detección y reconocimiento facial de individuos con trayectorias anómalas. Para probar el sistema completo, se montó un sistema CCTV formado por tres cámaras con puntos de vista diferentes y se ha creado un conjunto de vídeos propio. 
+
+El sistema implementado toma como entrada una serie de vídeos (vista cenital) de los que se extraen las trayectorias con el método de tracking [FairMOT](https://github.com/ifzhang/FairMOT). A continuación, se aplica clustering sobre ellas para extraer el comportamiento normal y detectar, posteriormente, aquellas que sean anómalas en cuanto a dirección o velocidad. Aparte de la cámara cenital con la que se localiza a los individuos con trayectorias anormales, contamos con dos cámaras más, con puntos de vista diferentes, para reidentificar a estas personas dentro del Circuito Cerrado de Televisión y realizar el reconocimiento facial que confirme su identidad.
