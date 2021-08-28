@@ -6,7 +6,7 @@ El sistema implementado toma como entrada una serie de vídeos (vista cenital) d
 
 Dado que el conjunto de datos utilizado es para uso privado y exclusivo de los miembros del proyecto, los resultados obtenidos a partir de este y reflejados en la memoria del trabajo no son reproducibles. Con el código y los datos presentes en este repositorio se pueden obtener los resultados relativos a la detección de anomalías en trayectorias sobre el dataset [Peds1](https://drive.google.com/file/d/1l1XBHSr_XLlmGJRs_UrvZ0ExcGDDjzKI/view?usp=sharing).
 
-## Estructura
+## Estructura de la carpeta Anomaly_detections_Peds1
 
 ### gt
 
