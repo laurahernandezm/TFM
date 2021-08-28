@@ -71,3 +71,16 @@ Este archivo contiene funciones que se encargan de actualizar la información so
 ## Instrucciones para la reproducción de resultados en Anomaly_detections_Peds1
 
 Para generar los mismos resultados mostrados en el trabajo (relativos al dataset Peds1), los pasos a seguir son los siguientes:
+
+1.  Descargar el contenido del repositorio y descomprimirlo.
+2.  Descargar el [conjunto de datos](https://drive.google.com/file/d/1l1XBHSr_XLlmGJRs_UrvZ0ExcGDDjzKI/view?usp=sharing) y descomprimirlo en la carpeta **data** del directorio **Anomaly_detections_Peds1**.
+3.  El directorio **FairMOT** contiene los archivos y modelos necesarios, por lo que no es necesario descargar nada externo. Se está utilizando el contenido del siguiente [repositorio](https://github.com/ifzhang/FairMOT) a fecha 26/05/2021. Sí es necesario instalar las dependencias tal como se indica en el apartado [Installation](https://github.com/ifzhang/FairMOT#installation) del repositorio anterior.
+4.  Una vez instaladas las dependencias, especificar en el archivo **/FairMOT/src/demo_from_script.py** si se van a procesar los vídeos de entrenamiento o de test (mod = dir + "train/" o mod = dir + "test/").
+5.  Realizar el tracking: `python FairMOT/src/demo_from_script.py`
+6.  Mover los archivos (vídeo y texto de train y test) que se han generado a una carpeta **peds1** dentro de la carpeta **demos** de **FairMOT**. (Este paso es opcional, simplemente para que la ruta especificada en el siguiente script a ejecutar sea correcta. Pueden dejarse los resultados tal como se han generado y cambiar dicha ruta).
+7.  Ejecutar el script **create_tracking_results.py** para crear la carpeta **tracking_results**, que se usa como entrada en el algoritmo de detección de anomalías: `python create_tracking_results.py`
+8.  Ejecutar el algoritmo completo: `python run.py` o train y test por separado: `python train.py` `python test.py`
+9.  Ejecutar el script **create_test_folder.py** para crear la carpeta **test_track**, necesaria para calcular las métricas: `python create_test_folder.py`
+10. Ejecutar el script **metrics.py**: `python metrics.py ./gt/ ./test_track/`
+11. Para dibujar las detecciones del algoritmo junto con las verdaderas anomalías en un mismo vídeo, ejecutar el script **draw_gt_dets.py**: `python draw_gt_dets.py`
+
