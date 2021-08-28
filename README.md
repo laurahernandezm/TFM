@@ -28,6 +28,10 @@ Este script construye el directorio con los datos de las trayectorias anómalas 
 
 Este script construye el directorio con las trayectorias obtenidas por el algoritmo de tracking.
 
+### datasets.py
+
+Con este archivo se pueden gestionar los conjuntos de datos disponibles. Estructura tomada de [_Tracking without bells and whistles_](https://github.com/phil-bergmann/tracking_wo_bnw).
+
 ### draw_gt_dets.py
 
 Script para dibujar las detecciones del algoritmo (color rojo) y ground truth (color verde) sobre el mismo vídeo.
@@ -39,6 +43,14 @@ Imagen que se utiliza como lienzo para dibujar la información relacionada con l
 ### metrics.py
 
 Este script se encarga de computar las métricas tomando como entradas el directorio _gt_ y el directorio creado por _create_test_folder.py_.
+
+### peds1_sequence.py
+
+Lectura y procesado del conjunto de datos Peds1. Estructura tomada de [_Tracking without bells and whistles_](https://github.com/phil-bergmann/tracking_wo_bnw).
+
+### peds1_wrapper.py
+
+Gestión de los vídeos del conjunto de datos Peds1. Estructura tomada de [_Tracking without bells and whistles_](https://github.com/phil-bergmann/tracking_wo_bnw).
 
 ### run.py
 
