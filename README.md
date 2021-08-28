@@ -12,10 +12,6 @@ Dado que el conjunto de datos utilizado es para uso privado y exclusivo de los m
 
 Este directorio contiene las ground truth actualizadas de cada vídeo del conjunto de test para realizar el cálculo de las métricas.
 
-### FairMOT
-
-En este directorio encontramos la implementación del algoritmo de tracking [FairMOT](https://github.com/ifzhang/FairMOT) con un archivo extra (src/demo_from_script.py) que hemos usado para automatizar el procesado de todos los vídeos que necesitamos y el archivo src/demo.py modificado.
-
 ### anomaly_detections.py
 
 Este archivo contiene las funciones que se encargan de detectar las trayectorias anormales y dibujar los cuadros delimitadores correspondientes en los vídeos del dataset.
@@ -31,6 +27,14 @@ Este script construye el directorio con las trayectorias obtenidas por el algori
 ### datasets.py
 
 Con este archivo se pueden gestionar los conjuntos de datos disponibles. Estructura tomada de [_Tracking without bells and whistles_](https://github.com/phil-bergmann/tracking_wo_bnw).
+
+### demo.py
+
+Archivo demo.py de [FairMOT](https://github.com/ifzhang/FairMOT) con algunas modificaciones (mover a la carpeta **FairMOT/src/**).
+
+### demo_from_script.py
+
+Script para facilitar el tracking de todos los vídeos de entrenamiento o test (mover a la carpeta **FairMOT/src/**).
 
 ### draw_gt_dets.py
 
@@ -85,9 +89,9 @@ Este archivo contiene funciones que se encargan de actualizar la información so
 Para generar los mismos resultados mostrados en el trabajo (relativos al dataset Peds1), los pasos a seguir son los siguientes:
 
 1.  Descargar el contenido del repositorio y descomprimirlo.
-2.  Descargar el [conjunto de datos](https://drive.google.com/file/d/1l1XBHSr_XLlmGJRs_UrvZ0ExcGDDjzKI/view?usp=sharing) y descomprimirlo en la carpeta **data** del directorio **Anomaly_detections_Peds1**.
-3.  El directorio **FairMOT** contiene los archivos y modelos necesarios, por lo que no es necesario descargar nada externo. Se está utilizando el contenido del siguiente [repositorio](https://github.com/ifzhang/FairMOT) a fecha 26/05/2021. Sí es necesario instalar las dependencias tal como se indica en el apartado [Installation](https://github.com/ifzhang/FairMOT#installation) del repositorio anterior.
-4.  Una vez instaladas las dependencias, especificar en el archivo **/FairMOT/src/demo_from_script.py** si se van a procesar los vídeos de entrenamiento o de test (mod = dir + "train/" o mod = dir + "test/").
+2.  Descargar el [conjunto de datos](https://drive.google.com/file/d/1l1XBHSr_XLlmGJRs_UrvZ0ExcGDDjzKI/view?usp=sharing) y descomprimirlo en una carpeta **data** del directorio **Anomaly_detections_Peds1**.
+3.  Descargar el contenido del repositorio [FairMOT](https://github.com/ifzhang/FairMOT), descomprimirlo en una carpeta **FairMOT** del directorio **Anomaly_detections_Peds1** y seguir los pasos de instalación (https://github.com/ifzhang/FairMOT#installation) y preparación, descargando el modelo **CrowdHuman** (https://github.com/ifzhang/FairMOT#data-preparation).
+4.  Una vez preparado el directorio de tracking, mover a la carpeta **FairMOT/src/** los archivos **demo.py** y **demo_from_script.py** y especificar en este último si se van a procesar los vídeos de entrenamiento o de test (mod = dir + "train/" o mod = dir + "test/").
 5.  Realizar el tracking: `python FairMOT/src/demo_from_script.py`
 6.  Mover los archivos (vídeo y texto de train y test) que se han generado a una carpeta **peds1** dentro de la carpeta **demos** de **FairMOT**. (Este paso es opcional, simplemente para que la ruta especificada en el siguiente script a ejecutar sea correcta. Pueden dejarse los resultados tal como se han generado y cambiar dicha ruta).
 7.  Ejecutar el script **create_tracking_results.py** para crear la carpeta **tracking_results**, que se usa como entrada en el algoritmo de detección de anomalías: `python create_tracking_results.py`
