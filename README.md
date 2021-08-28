@@ -68,6 +68,6 @@ Este archivo contiene diversas funciones auxiliares, así como variables y const
 
 Este archivo contiene funciones que se encargan de actualizar la información sobre las zonas descubiertas durante el entrenamiento.
 
-## Instrucciones para la reproducción de resultados
+## Instrucciones para la reproducción de resultados en Anomaly_detections_Peds1
 
 Para generar los mismos resultados mostrados en el trabajo (relativos al dataset Peds1), los pasos a seguir son los siguientes:
