@@ -4,7 +4,7 @@ En este repositorio puede consultarse el código desarrollado para el Trabajo Fi
 
 El sistema implementado toma como entrada una serie de vídeos (vista cenital) de los que se extraen las trayectorias con el método de tracking [FairMOT](https://github.com/ifzhang/FairMOT). A continuación, se aplica clustering sobre ellas para extraer el comportamiento normal y detectar, posteriormente, aquellas que sean anómalas en cuanto a dirección o velocidad. Aparte de la cámara cenital con la que se localiza a los individuos con trayectorias anormales, contamos con dos cámaras más, con puntos de vista diferentes, para reidentificar a estas personas dentro del Circuito Cerrado de Televisión y realizar el reconocimiento facial que confirme su identidad.
 
-Dado que el conjunto de datos utilizado es para uso privado y exclusivo de los miembros del proyecto, los resultados obtenidos a partir de este y reflejados en la memoria del trabajo no son reproducibles. Con el código y los datos presentes en este repositorio se pueden obtener los resultados relativos al dataset [Peds1](https://drive.google.com/file/d/1l1XBHSr_XLlmGJRs_UrvZ0ExcGDDjzKI/view?usp=sharing).
+Dado que el conjunto de datos utilizado es para uso privado y exclusivo de los miembros del proyecto, los resultados obtenidos a partir de este y reflejados en la memoria del trabajo no son reproducibles. Con el código y los datos presentes en este repositorio se pueden obtener los resultados relativos a la detección de anomalías en trayectorias sobre el dataset [Peds1](https://drive.google.com/file/d/1l1XBHSr_XLlmGJRs_UrvZ0ExcGDDjzKI/view?usp=sharing).
 
 ## Estructura
 
