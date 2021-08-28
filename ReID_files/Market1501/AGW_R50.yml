@@ -1,0 +1,14 @@
+_BASE_: ../Base-AGW.yml
+
+DATASETS:
+  NAMES: ("Market1501",)
+  TESTS: ("Market1501",)
+
+SOLVER:
+  MAX_EPOCH: 60
+  CHECKPOINT_PERIOD: 2
+
+TEST:
+  EVAL_PERIOD: 2
+
+OUTPUT_DIR: logs/market1501/agw_R50

@@ -1,0 +1,21 @@
+_BASE_: ../Base-AGW.yml
+
+MODEL:
+  BACKBONE:
+    NAME: build_mobilenetv2_backbone
+    DEPTH: 1.0x
+    FEAT_DIM: 1280
+    PRETRAIN_PATH: /home/lhernandez/.cache/torch/checkpoints/mobilenetv2_1.0-f2a8633.pth.tar
+
+SOLVER:
+  MAX_EPOCH: 60
+  CHECKPOINT_PERIOD: 2
+
+TEST:
+  EVAL_PERIOD: 2
+
+DATASETS:
+  NAMES: ("Market1501",)
+  TESTS: ("Market1501",)
+
+OUTPUT_DIR: logs/market1501/agw_MN

@@ -1,0 +1,26 @@
+_BASE_: ../Base-SBS.yml
+
+MODEL:
+  BACKBONE:
+    NAME: build_mobilenetv3_backbone
+    DEPTH: Large
+    FEAT_DIM: 1280
+    PRETRAIN: True
+    PRETRAIN_PATH: /home/lhernandez/.cache/torch/checkpoints/mobilenet_v3_large-8738ca79.pth
+
+SOLVER:
+  MAX_EPOCH: 30
+  CHECKPOINT_PERIOD: 2
+
+TEST:
+  EVAL_PERIOD: 2
+
+DATASETS:
+  NAMES: ("Market1501", "CCTV")
+  TESTS: ("CCTV",)
+
+INPUT:
+  SIZE_TRAIN: [256, 128]
+  SIZE_TEST: [256, 128]
+
+OUTPUT_DIR: logs/cctv/sbs_MN3
