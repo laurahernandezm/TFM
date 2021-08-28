@@ -102,4 +102,14 @@ Para generar los mismos resultados mostrados en el trabajo (relativos al dataset
 
 ## Estructura de la carpeta ReID_files
 
-Para la parte de reidentificación de individuos, se han seguido las instrucciones de instalación (https://github.com/JDAI-CV/fast-reid/blob/master/INSTALL.md#installation) y utilización (https://github.com/JDAI-CV/fast-reid/blob/master/GETTING_STARTED.md#getting-started-with-fastreid) disponibles en el repositorio de [FastReID](https://github.com/JDAI-CV/fast-reid). En el directorio **ReID_files** están disponibles los archivos de configuración .yml utilizados para los experimentos reflejados en la memoria del trabajo, tanto para el conjunto Market 1501 como para nuestro dataset privado. Asimismo, también se incluye el archivo necesario para procesar este último conjunto de datos, el cual se encontraría en la carpeta **fastreid/data/datasets/** del repositorio de FastReID, y el script utilizado para evaluar el modelo seleccionado con los datos de test, el cual se encontraría en la carpeta **tools/**.
+Para la parte de reidentificación de individuos, se han seguido las instrucciones de instalación (https://github.com/JDAI-CV/fast-reid/blob/master/INSTALL.md#installation) y utilización (https://github.com/JDAI-CV/fast-reid/blob/master/GETTING_STARTED.md#getting-started-with-fastreid) disponibles en el repositorio de [FastReID](https://github.com/JDAI-CV/fast-reid). 
+
+### Market1501
+
+En este directorio están disponibles los archivos de configuración .yml utilizados para los experimentos reflejados en la memoria del trabajo para el conjunto Market 1501. 
+
+### CCTV
+
+En esta carpeta tenemos el archivo .yml que hemos usado para realizar el fine tuning con nuestro conjunto de datos, ejecución cuyos resultados están en la memoria.
+
+Asimismo, también se incluye el archivo necesario para procesar el conjunto de datos CCTV, que se encontraría en la carpeta **fastreid/data/datasets/** del repositorio de FastReID, y el script utilizado para evaluar el modelo seleccionado con los datos de test, que se encontraría en la carpeta **tools/**.
