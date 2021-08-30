@@ -9,7 +9,6 @@ import cv2
 import torch
 
 sys.path.append('.')
-print(os.getcwd())
 
 from fastreid.config import get_cfg
 from fastreid.engine import DefaultTrainer
@@ -88,27 +87,15 @@ def check_matches(test_folder, sims_esc, sims_fac):
                 imgs = sorted(os.listdir(osp.join(TEST_SET_FOLDER, test, cam)))
                 for index in range(len(query_ids)):
                     if cam == "esc":
-                        print(sims_esc[index])
                         if sims_esc[index] != -1 and query_ids[index] == imgs[sims_esc[index]].split("-")[0][4:]:
                             correct_matches_esc.append(True)
-                            print(sims_esc[index])
-                            print(query_ids[index])
-                            print(imgs[sims_esc[index]].split("-")[0][4:])
                         else:
                             correct_matches_esc.append(False)
-                            print(query_ids[index])
-                            print(imgs[sims_esc[index]].split("-")[0][4:])
                     else:
-                        print(sims_fac[index])
                         if sims_fac[index] != -1 and query_ids[index] == imgs[sims_fac[index]].split("-")[0][4:]:
                             correct_matches_fac.append(True)
-                            print(sims_fac[index])
-                            print(query_ids[index])
-                            print(imgs[sims_fac[index]].split("-")[0][4:])
                         else:
                             correct_matches_fac.append(False)
-                            print(query_ids[index])
-                            print(imgs[sims_fac[index]].split("-")[0][4:])
 
     return correct_matches_esc, correct_matches_fac
 
@@ -139,7 +126,7 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
     for test in sorted(os.listdir(TEST_SET_FOLDER)):
         if test == test_folder:
             for cam in os.listdir(osp.join(TEST_SET_FOLDER, test)):
-                for img in sorted(os.listdir(osp.join(TEST_SET_FOLDER, test))):
+                for img in sorted(os.listdir(osp.join(TEST_SET_FOLDER, test, cam))):
                     id = img.split("-")[0][4:]
                     if cam == "esc":
                         esc_ids.append(id)
@@ -152,7 +139,6 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
                 imgs = sorted(os.listdir(osp.join(TEST_SET_FOLDER, test, cam)))
                 for index in range(len(query_ids)):
                     if cam == "esc":
-                        print(sims_esc[index])
                         if sims_esc[index] == -1:
                             if query_ids[index] in esc_ids:
                                 fn_esc += 1
@@ -167,7 +153,6 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
                                 else:
                                     fp_not_av_esc += 1
                     else:
-                        print(sims_fac[index])
                         if sims_fac[index] == -1:
                             if query_ids[index] in fac_ids:
                                 fn_fac += 1
@@ -182,17 +167,17 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
                                 else:
                                     fp_not_av_fac += 1
 
-    print("TP in esc camera: " + str(tp_esc))
-    print("TN in esc camera: " + str(tn_esc))
-    print("FP with available match in esc camera: " + str(fp_av_esc))
-    print("FP with not available match in esc camera: " + str(fp_not_av_esc))
-    print("FN in esc camera: " + str(fn_esc))
+    print("\n\tTP in esc camera: " + str(tp_esc))
+    print("\tTN in esc camera: " + str(tn_esc))
+    print("\tFP with available match in esc camera: " + str(fp_av_esc))
+    print("\tFP with not available match in esc camera: " + str(fp_not_av_esc))
+    print("\tFN in esc camera: " + str(fn_esc))
 
-    print("TP in fac camera: " + str(tp_fac))
-    print("TN in fac camera: " + str(tn_fac))
-    print("FP with available match in fac camera: " + str(fp_av_fac))
-    print("FP with not available match in fac camera: " + str(fp_not_av_fac))
-    print("FN in fac camera: " + str(fn_fac))
+    print("\n\tTP in fac camera: " + str(tp_fac))
+    print("\tTN in fac camera: " + str(tn_fac))
+    print("\tFP with available match in fac camera: " + str(fp_av_fac))
+    print("\tFP with not available match in fac camera: " + str(fp_not_av_fac))
+    print("\tFN in fac camera: " + str(fn_fac))
 
     return tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, fp_av_fac, fp_not_av_fac, fn_fac
 
@@ -229,7 +214,9 @@ def main():
     # Test
     for test_clip in sorted(os.listdir(QUERY_FOLDER)):
         query, test_esc, test_fac = get_images_from_test_folder(test_clip, cfg)
-        print(test_clip)
+        
+        print("\nCurrent clip: " + str(test_clip))
+        
         # To tensor
         query_tensor = torch.cat(query)
         test_esc_tensor = torch.cat(test_esc)
@@ -275,8 +262,8 @@ def main():
 
         correct_esc, correct_fac = check_matches(test_clip, max_cos_sims_esc, max_cos_sims_fac)
 
-        print("Correct matches against esc camera: " + str(sum(correct_esc)) + "/" + str(len(correct_esc)))
-        print("Correct matches against fac camera: " + str(sum(correct_fac)) + "/" + str(len(correct_fac)))
+        print("\n\tCorrect matches against esc camera: " + str(sum(correct_esc)) + "/" + str(len(correct_esc)))
+        print("\tCorrect matches against fac camera: " + str(sum(correct_fac)) + "/" + str(len(correct_fac)))
 
         total_esc += len(correct_esc)
         total_matches_esc += sum(correct_esc)
@@ -297,16 +284,13 @@ def main():
         total_fp_av_fac += fp_av_fac
         total_fn_fac += fn_fac
 
-    print("Total correct matches against esc camera: " + str(total_matches_esc) + "/" + str(total_esc))
-    print("Total correct matches against fac camera: " + str(total_matches_fac) + "/" + str(total_fac))
-
-    print("Total TP in esc camera: " + str(total_tp_esc))
+    print("\n\nTotal TP in esc camera: " + str(total_tp_esc))
     print("Total TN in esc camera: " + str(total_tn_esc))
     print("Total FP with available match in esc camera: " + str(total_fp_av_esc))
     print("Total FP with not available match in esc camera: " + str(total_fp_not_av_esc))
     print("Total FN in esc camera: " + str(total_fn_esc))
 
-    print("Total TP in fac camera: " + str(total_tp_fac))
+    print("\nTotal TP in fac camera: " + str(total_tp_fac))
     print("Total TN in fac camera: " + str(total_tn_fac))
     print("Total FP with available match in fac camera: " + str(total_fp_av_fac))
     print("Total FP with not available match in fac camera: " + str(total_fp_not_av_fac))
