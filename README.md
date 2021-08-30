@@ -112,4 +112,4 @@ En este directorio están disponibles los archivos de configuración .yml utiliz
 
 En esta carpeta tenemos el archivo .yml que hemos usado para realizar el fine tuning con nuestro conjunto de datos, ejecución cuyos resultados están en la memoria.
 
-Asimismo, también se incluye el archivo necesario para procesar el conjunto de datos CCTV (**cctv.py**), que se encontraría en la carpeta **fastreid/data/datasets/** del repositorio de FastReID, y el script utilizado para evaluar el modelo seleccionado con los datos de test (**cctv_evaluate.py**), que se encontraría en la carpeta **tools/**.
+Asimismo, también se incluye el archivo necesario para procesar el conjunto de datos CCTV (**cctv.py**), que se encontraría en la carpeta **fastreid/data/datasets/** del repositorio de FastReID, el script utilizado para evaluar el modelo seleccionado con los datos de test (**cctv_evaluate.py**), que se encontraría en la carpeta **tools/**, y los resultados de la reidentificación (**reid_results.txt***).
