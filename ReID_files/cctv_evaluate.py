@@ -20,6 +20,9 @@ DATA = '/mnt/sdd2/herta_aimars/datasets-reid/abnormal_identities/'
 QUERY_FOLDER = DATA + "query/"
 TEST_SET_FOLDER = DATA + "test_set/"
 
+# Threshold to consider a matching
+REID_THRES = 0.4
+
 # Get normalized images from query and gallery for each test clip
 def get_images_from_test_folder(test_folder, cfg):
 
@@ -27,25 +30,25 @@ def get_images_from_test_folder(test_folder, cfg):
     test_set_esc = []
     test_set_fac = []
 
-    for test in os.listdir(QUERY_FOLDER):
+    for test in sorted(os.listdir(QUERY_FOLDER)):
         if test == test_folder:
             aux = osp.join(osp.join(QUERY_FOLDER, test), "*jpg")
-            query_files = glob.glob(aux)
+            query_files = sorted(glob.glob(aux))
             for img in query_files:
                 image = preprocess(cv2.imread(img), cfg)
                 query.append(image)
 
-    for test in os.listdir(TEST_SET_FOLDER):
+    for test in sorted(os.listdir(TEST_SET_FOLDER)):
         if test == test_folder:
             for cam in os.listdir(osp.join(TEST_SET_FOLDER, test)):
                 aux = osp.join(osp.join(TEST_SET_FOLDER, test, cam), "*jpg")
                 if cam == "esc":
-                    test_set_esc_files = glob.glob(aux)
+                    test_set_esc_files = sorted(glob.glob(aux))
                     for img in test_set_esc_files:
                         image = preprocess(cv2.imread(img), cfg)
                         test_set_esc.append(image)
                 else:
-                    test_set_fac_files = glob.glob(aux)
+                    test_set_fac_files = sorted(glob.glob(aux))
                     for img in test_set_fac_files:
                         image = preprocess(cv2.imread(img), cfg)
                         test_set_fac.append(image)
@@ -67,6 +70,132 @@ def preprocess(image, cfg):
 
     return preproc_image
 
+def check_matches(test_folder, sims_esc, sims_fac):
+
+    query_ids = []
+    correct_matches_esc = []
+    correct_matches_fac = []
+
+    for test in sorted(os.listdir(QUERY_FOLDER)):
+        if test == test_folder:
+            for img in sorted(os.listdir(osp.join(QUERY_FOLDER, test))):
+                id = img.split("-")[0][4:]
+                query_ids.append(id)
+
+    for test in sorted(os.listdir(TEST_SET_FOLDER)):
+        if test == test_folder:
+            for cam in os.listdir(osp.join(TEST_SET_FOLDER, test)):
+                imgs = sorted(os.listdir(osp.join(TEST_SET_FOLDER, test, cam)))
+                for index in range(len(query_ids)):
+                    if cam == "esc":
+                        print(sims_esc[index])
+                        if sims_esc[index] != -1 and query_ids[index] == imgs[sims_esc[index]].split("-")[0][4:]:
+                            correct_matches_esc.append(True)
+                            print(sims_esc[index])
+                            print(query_ids[index])
+                            print(imgs[sims_esc[index]].split("-")[0][4:])
+                        else:
+                            correct_matches_esc.append(False)
+                            print(query_ids[index])
+                            print(imgs[sims_esc[index]].split("-")[0][4:])
+                    else:
+                        print(sims_fac[index])
+                        if sims_fac[index] != -1 and query_ids[index] == imgs[sims_fac[index]].split("-")[0][4:]:
+                            correct_matches_fac.append(True)
+                            print(sims_fac[index])
+                            print(query_ids[index])
+                            print(imgs[sims_fac[index]].split("-")[0][4:])
+                        else:
+                            correct_matches_fac.append(False)
+                            print(query_ids[index])
+                            print(imgs[sims_fac[index]].split("-")[0][4:])
+
+    return correct_matches_esc, correct_matches_fac
+
+def confusion_matrix(test_folder, sims_esc, sims_fac):
+
+    query_ids = []
+    esc_ids = []
+    fac_ids = []
+
+    tp_esc = 0
+    tn_esc = 0
+    fp_not_av_esc = 0
+    fp_av_esc = 0
+    fn_esc = 0
+
+    tp_fac = 0
+    tn_fac = 0
+    fp_not_av_fac = 0
+    fp_av_fac = 0
+    fn_fac = 0
+
+    for test in sorted(os.listdir(QUERY_FOLDER)):
+        if test == test_folder:
+            for img in sorted(os.listdir(osp.join(QUERY_FOLDER, test))):
+                id = img.split("-")[0][4:]
+                query_ids.append(id)
+
+    for test in sorted(os.listdir(TEST_SET_FOLDER)):
+        if test == test_folder:
+            for cam in os.listdir(osp.join(TEST_SET_FOLDER, test)):
+                for img in sorted(os.listdir(osp.join(TEST_SET_FOLDER, test))):
+                    id = img.split("-")[0][4:]
+                    if cam == "esc":
+                        esc_ids.append(id)
+                    else:
+                        fac_ids.append(id)
+
+    for test in sorted(os.listdir(TEST_SET_FOLDER)):
+        if test == test_folder:
+            for cam in os.listdir(osp.join(TEST_SET_FOLDER, test)):
+                imgs = sorted(os.listdir(osp.join(TEST_SET_FOLDER, test, cam)))
+                for index in range(len(query_ids)):
+                    if cam == "esc":
+                        print(sims_esc[index])
+                        if sims_esc[index] == -1:
+                            if query_ids[index] in esc_ids:
+                                fn_esc += 1
+                            else:
+                                tn_esc += 1
+                        else:
+                            if query_ids[index] == imgs[sims_esc[index]].split("-")[0][4:]:
+                                tp_esc += 1
+                            else:
+                                if query_ids[index] in esc_ids:
+                                    fp_av_esc += 1
+                                else:
+                                    fp_not_av_esc += 1
+                    else:
+                        print(sims_fac[index])
+                        if sims_fac[index] == -1:
+                            if query_ids[index] in fac_ids:
+                                fn_fac += 1
+                            else:
+                                tn_fac += 1
+                        else:
+                            if query_ids[index] == imgs[sims_fac[index]].split("-")[0][4:]:
+                                tp_fac += 1
+                            else:
+                                if query_ids[index] in fac_ids:
+                                    fp_av_fac += 1
+                                else:
+                                    fp_not_av_fac += 1
+
+    print("TP in esc camera: " + str(tp_esc))
+    print("TN in esc camera: " + str(tn_esc))
+    print("FP with available match in esc camera: " + str(fp_av_esc))
+    print("FP with not available match in esc camera: " + str(fp_not_av_esc))
+    print("FN in esc camera: " + str(fn_esc))
+
+    print("TP in fac camera: " + str(tp_fac))
+    print("TN in fac camera: " + str(tn_fac))
+    print("FP with available match in fac camera: " + str(fp_av_fac))
+    print("FP with not available match in fac camera: " + str(fp_not_av_fac))
+    print("FN in fac camera: " + str(fn_fac))
+
+    return tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, fp_av_fac, fp_not_av_fac, fn_fac
+
 def main():
 
     # Get configuration from file
@@ -80,10 +209,27 @@ def main():
     # Disable all training options
     model.eval()
 
-    # Test
-    for test_clip in os.listdir(QUERY_FOLDER):
-        query, test_esc, test_fac = get_images_from_test_folder(test_clip, cfg)
+    total_esc = 0
+    total_matches_esc = 0
+    total_fac = 0
+    total_matches_fac = 0
 
+    total_tp_esc = 0
+    total_tn_esc = 0
+    total_fp_not_av_esc = 0
+    total_fp_av_esc = 0
+    total_fn_esc = 0
+
+    total_tp_fac = 0
+    total_tn_fac = 0
+    total_fp_not_av_fac = 0
+    total_fp_av_fac = 0
+    total_fn_fac = 0
+
+    # Test
+    for test_clip in sorted(os.listdir(QUERY_FOLDER)):
+        query, test_esc, test_fac = get_images_from_test_folder(test_clip, cfg)
+        print(test_clip)
         # To tensor
         query_tensor = torch.cat(query)
         test_esc_tensor = torch.cat(test_esc)
@@ -97,23 +243,74 @@ def main():
         features_test_esc = model(test_esc_tensor)
         features_test_fac = model(test_fac_tensor)
 
-        # Compute cosine similarity
+        max_cos_sims_esc = []
+        # Compute cosine similarity between query and test_set_esc
         for query_feat_vector in features_query:
+            cos_sims = []
             for esc_feat_vector in features_test_esc:
-                cos = torch.nn.functional.cosine_similarity(torch.nn.functional.normalize(query_feat_vector), torch.nn.functional.normalize(esc_feat_vector))
+                cos = torch.nn.functional.cosine_similarity(torch.nn.functional.normalize(query_feat_vector, dim = -1), torch.nn.functional.normalize(esc_feat_vector, dim = -1), dim = 0)
+                cos_sims.append(cos.item())
 
-        '''query_esc_cos = torch.nn.functional.cosine_similarity(torch.nn.functional.normalize(features_query, 0), torch.nn.functional.normalize(features_test_esc, 0))
-        query_fac_cos = torch.nn.functional.cosine_similarity(torch.nn.functional.normalize(features_query, 0), torch.nn.functional.normalize(features_test_fac, 0))
+            # Get more similar item and save it if its cosine similarity is above the threshold
+            max_sim = max(cos_sims)
+            if max_sim >= REID_THRES:
+                max_cos_sims_esc.append(cos_sims.index(max_sim))
+            else:
+                max_cos_sims_esc.append(-1)
 
-        # Get max values from cosine similarity between query and esc images
-        max_esc = torch.max(query_esc_cos, 1)
-        max_esc_indices = max_esc.indices
-        max_esc_values = max_exc.values
+        max_cos_sims_fac = []
+        # Compute cosine similarity between query and test_set_fac
+        for query_feat_vector in features_query:
+            cos_sims = []
+            for fac_feat_vector in features_test_fac:
+                cos = torch.nn.functional.cosine_similarity(torch.nn.functional.normalize(query_feat_vector, dim = -1), torch.nn.functional.normalize(fac_feat_vector, dim = -1), dim = 0)
+                cos_sims.append(cos.item())
 
-        # Get max values from cosine similarity between query and fac images
-        max_fac = torch.max(query_fac_cos, 1)
-        max_fac_indices = max_fac.indices
-        max_fac_values = max_fac.values'''
+            # Get more similar item and save it if its cosine similarity is above the threshold
+            max_sim = max(cos_sims)
+            if max_sim >= REID_THRES:
+                max_cos_sims_fac.append(cos_sims.index(max_sim))
+            else:
+                max_cos_sims_fac.append(-1)
+
+        correct_esc, correct_fac = check_matches(test_clip, max_cos_sims_esc, max_cos_sims_fac)
+
+        print("Correct matches against esc camera: " + str(sum(correct_esc)) + "/" + str(len(correct_esc)))
+        print("Correct matches against fac camera: " + str(sum(correct_fac)) + "/" + str(len(correct_fac)))
+
+        total_esc += len(correct_esc)
+        total_matches_esc += sum(correct_esc)
+        total_fac += len(correct_fac)
+        total_matches_fac += sum(correct_fac)
+
+        tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, fp_av_fac, fp_not_av_fac, fn_fac = confusion_matrix(test_clip, max_cos_sims_esc, max_cos_sims_fac)
+
+        total_tp_esc += tp_esc
+        total_tn_esc += tn_esc
+        total_fp_not_av_esc += fp_not_av_esc
+        total_fp_av_esc += fp_av_esc
+        total_fn_esc += fn_esc
+
+        total_tp_fac += tp_fac
+        total_tn_fac += tn_fac
+        total_fp_not_av_fac += fp_not_av_fac
+        total_fp_av_fac += fp_av_fac
+        total_fn_fac += fn_fac
+
+    print("Total correct matches against esc camera: " + str(total_matches_esc) + "/" + str(total_esc))
+    print("Total correct matches against fac camera: " + str(total_matches_fac) + "/" + str(total_fac))
+
+    print("Total TP in esc camera: " + str(total_tp_esc))
+    print("Total TN in esc camera: " + str(total_tn_esc))
+    print("Total FP with available match in esc camera: " + str(total_fp_av_esc))
+    print("Total FP with not available match in esc camera: " + str(total_fp_not_av_esc))
+    print("Total FN in esc camera: " + str(total_fn_esc))
+
+    print("Total TP in fac camera: " + str(total_tp_fac))
+    print("Total TN in fac camera: " + str(total_tn_fac))
+    print("Total FP with available match in fac camera: " + str(total_fp_av_fac))
+    print("Total FP with not available match in fac camera: " + str(total_fp_not_av_fac))
+    print("Total FN in fac camera: " + str(total_fn_fac))
 
 if __name__ == '__main__':
     main()
