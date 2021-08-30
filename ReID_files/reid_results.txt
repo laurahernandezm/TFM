@@ -1,0 +1,813 @@
+Skip loading parameter 'heads.weight' to the model due to incompatible shapes: (761, 1280) in the checkpoint but (0, 1280) in the model! You might want to double check if this is expected.
+
+Current clip: test_1
+
+	Correct matches against esc camera: 1/3
+	Correct matches against fac camera: 0/3
+
+	TP in esc camera: 1
+	TN in esc camera: 1
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 1
+	FN in esc camera: 0
+
+	TP in fac camera: 0
+	TN in fac camera: 3
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_10
+
+	Correct matches against esc camera: 3/7
+	Correct matches against fac camera: 2/7
+
+	TP in esc camera: 3
+	TN in esc camera: 1
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 1
+	FN in esc camera: 1
+
+	TP in fac camera: 2
+	TN in fac camera: 2
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 3
+	FN in fac camera: 0
+
+Current clip: test_11
+
+	Correct matches against esc camera: 3/5
+	Correct matches against fac camera: 3/5
+
+	TP in esc camera: 3
+	TN in esc camera: 0
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 1
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 1
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 1
+
+Current clip: test_12
+
+	Correct matches against esc camera: 2/7
+	Correct matches against fac camera: 3/7
+
+	TP in esc camera: 2
+	TN in esc camera: 2
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 0
+	FN in esc camera: 2
+
+	TP in fac camera: 3
+	TN in fac camera: 1
+	FP with available match in fac camera: 1
+	FP with not available match in fac camera: 1
+	FN in fac camera: 1
+
+Current clip: test_13
+
+	Correct matches against esc camera: 3/5
+	Correct matches against fac camera: 1/5
+
+	TP in esc camera: 3
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 1
+	FN in esc camera: 1
+
+	TP in fac camera: 1
+	TN in fac camera: 1
+	FP with available match in fac camera: 1
+	FP with not available match in fac camera: 1
+	FN in fac camera: 1
+
+Current clip: test_14
+
+	Correct matches against esc camera: 0/2
+	Correct matches against fac camera: 0/2
+
+	TP in esc camera: 0
+	TN in esc camera: 0
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 1
+	FN in esc camera: 0
+
+	TP in fac camera: 0
+	TN in fac camera: 0
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 1
+	FN in fac camera: 1
+
+Current clip: test_15
+
+	Correct matches against esc camera: 5/9
+	Correct matches against fac camera: 5/9
+
+	TP in esc camera: 5
+	TN in esc camera: 1
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 2
+	FN in esc camera: 0
+
+	TP in fac camera: 5
+	TN in fac camera: 1
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 3
+	FN in fac camera: 0
+
+Current clip: test_16
+
+	Correct matches against esc camera: 8/11
+	Correct matches against fac camera: 5/11
+
+	TP in esc camera: 8
+	TN in esc camera: 1
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 2
+	FN in esc camera: 0
+
+	TP in fac camera: 5
+	TN in fac camera: 6
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_17
+
+	Correct matches against esc camera: 5/7
+	Correct matches against fac camera: 3/7
+
+	TP in esc camera: 5
+	TN in esc camera: 0
+	FP with available match in esc camera: 2
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 3
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 1
+	FN in fac camera: 0
+
+Current clip: test_18
+
+	Correct matches against esc camera: 8/17
+	Correct matches against fac camera: 3/17
+
+	TP in esc camera: 8
+	TN in esc camera: 1
+	FP with available match in esc camera: 2
+	FP with not available match in esc camera: 3
+	FN in esc camera: 3
+
+	TP in fac camera: 3
+	TN in fac camera: 6
+	FP with available match in fac camera: 2
+	FP with not available match in fac camera: 2
+	FN in fac camera: 4
+
+Current clip: test_19
+
+	Correct matches against esc camera: 5/5
+	Correct matches against fac camera: 4/5
+
+	TP in esc camera: 5
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 4
+	TN in fac camera: 1
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_2
+
+	Correct matches against esc camera: 2/4
+	Correct matches against fac camera: 1/4
+
+	TP in esc camera: 2
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 2
+
+	TP in fac camera: 1
+	TN in fac camera: 2
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 1
+
+Current clip: test_20
+
+	Correct matches against esc camera: 3/4
+	Correct matches against fac camera: 3/4
+
+	TP in esc camera: 3
+	TN in esc camera: 1
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 1
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_21
+
+	Correct matches against esc camera: 2/8
+	Correct matches against fac camera: 1/8
+
+	TP in esc camera: 2
+	TN in esc camera: 6
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 1
+	TN in fac camera: 5
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 1
+	FN in fac camera: 1
+
+Current clip: test_22
+
+	Correct matches against esc camera: 3/7
+	Correct matches against fac camera: 1/7
+
+	TP in esc camera: 3
+	TN in esc camera: 3
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 1
+	TN in fac camera: 4
+	FP with available match in fac camera: 1
+	FP with not available match in fac camera: 0
+	FN in fac camera: 1
+
+Current clip: test_23
+
+	Correct matches against esc camera: 4/5
+	Correct matches against fac camera: 2/5
+
+	TP in esc camera: 4
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 1
+
+	TP in fac camera: 2
+	TN in fac camera: 0
+	FP with available match in fac camera: 2
+	FP with not available match in fac camera: 0
+	FN in fac camera: 1
+
+Current clip: test_24
+
+	Correct matches against esc camera: 4/7
+	Correct matches against fac camera: 1/7
+
+	TP in esc camera: 4
+	TN in esc camera: 2
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 1
+	TN in fac camera: 4
+	FP with available match in fac camera: 2
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_25
+
+	Correct matches against esc camera: 4/7
+	Correct matches against fac camera: 1/7
+
+	TP in esc camera: 4
+	TN in esc camera: 1
+	FP with available match in esc camera: 2
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 1
+	TN in fac camera: 4
+	FP with available match in fac camera: 2
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_26
+
+	Correct matches against esc camera: 3/5
+	Correct matches against fac camera: 2/5
+
+	TP in esc camera: 3
+	TN in esc camera: 1
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 2
+	TN in fac camera: 2
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 1
+	FN in fac camera: 0
+
+Current clip: test_27
+
+	Correct matches against esc camera: 3/8
+	Correct matches against fac camera: 1/8
+
+	TP in esc camera: 3
+	TN in esc camera: 2
+	FP with available match in esc camera: 2
+	FP with not available match in esc camera: 0
+	FN in esc camera: 1
+
+	TP in fac camera: 1
+	TN in fac camera: 5
+	FP with available match in fac camera: 1
+	FP with not available match in fac camera: 1
+	FN in fac camera: 0
+
+Current clip: test_28
+
+	Correct matches against esc camera: 2/6
+	Correct matches against fac camera: 1/6
+
+	TP in esc camera: 2
+	TN in esc camera: 1
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 1
+	FN in esc camera: 2
+
+	TP in fac camera: 1
+	TN in fac camera: 1
+	FP with available match in fac camera: 2
+	FP with not available match in fac camera: 0
+	FN in fac camera: 2
+
+Current clip: test_29
+
+	Correct matches against esc camera: 4/7
+	Correct matches against fac camera: 3/7
+
+	TP in esc camera: 4
+	TN in esc camera: 1
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 2
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 0
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 3
+	FN in fac camera: 1
+
+Current clip: test_3
+
+	Correct matches against esc camera: 4/4
+	Correct matches against fac camera: 3/4
+
+	TP in esc camera: 4
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 1
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_30
+
+	Correct matches against esc camera: 5/6
+	Correct matches against fac camera: 3/6
+
+	TP in esc camera: 5
+	TN in esc camera: 1
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 3
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_31
+
+	Correct matches against esc camera: 2/6
+	Correct matches against fac camera: 1/6
+
+	TP in esc camera: 2
+	TN in esc camera: 3
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 1
+	FN in esc camera: 0
+
+	TP in fac camera: 1
+	TN in fac camera: 5
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_32
+
+	Correct matches against esc camera: 4/9
+	Correct matches against fac camera: 2/9
+
+	TP in esc camera: 4
+	TN in esc camera: 4
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 1
+	FN in esc camera: 0
+
+	TP in fac camera: 2
+	TN in fac camera: 4
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 2
+	FN in fac camera: 1
+
+Current clip: test_33
+
+	Correct matches against esc camera: 4/7
+	Correct matches against fac camera: 3/7
+
+	TP in esc camera: 4
+	TN in esc camera: 1
+	FP with available match in esc camera: 2
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 2
+	FP with available match in fac camera: 2
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_34
+
+	Correct matches against esc camera: 7/9
+	Correct matches against fac camera: 2/9
+
+	TP in esc camera: 7
+	TN in esc camera: 0
+	FP with available match in esc camera: 2
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 2
+	TN in fac camera: 1
+	FP with available match in fac camera: 2
+	FP with not available match in fac camera: 2
+	FN in fac camera: 2
+
+Current clip: test_35
+
+	Correct matches against esc camera: 4/5
+	Correct matches against fac camera: 2/5
+
+	TP in esc camera: 4
+	TN in esc camera: 0
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 2
+	TN in fac camera: 2
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 1
+	FN in fac camera: 0
+
+Current clip: test_36
+
+	Correct matches against esc camera: 2/3
+	Correct matches against fac camera: 0/3
+
+	TP in esc camera: 2
+	TN in esc camera: 0
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 0
+	TN in fac camera: 2
+	FP with available match in fac camera: 1
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_37
+
+	Correct matches against esc camera: 4/6
+	Correct matches against fac camera: 0/6
+
+	TP in esc camera: 4
+	TN in esc camera: 1
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 1
+	FN in esc camera: 0
+
+	TP in fac camera: 0
+	TN in fac camera: 6
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_38
+
+	Correct matches against esc camera: 1/4
+	Correct matches against fac camera: 0/4
+
+	TP in esc camera: 1
+	TN in esc camera: 2
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 1
+
+	TP in fac camera: 0
+	TN in fac camera: 3
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 1
+
+Current clip: test_39
+
+	Correct matches against esc camera: 3/8
+	Correct matches against fac camera: 3/8
+
+	TP in esc camera: 3
+	TN in esc camera: 2
+	FP with available match in esc camera: 2
+	FP with not available match in esc camera: 0
+	FN in esc camera: 1
+
+	TP in fac camera: 3
+	TN in fac camera: 2
+	FP with available match in fac camera: 3
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_4
+
+	Correct matches against esc camera: 6/8
+	Correct matches against fac camera: 2/8
+
+	TP in esc camera: 6
+	TN in esc camera: 0
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 0
+	FN in esc camera: 1
+
+	TP in fac camera: 2
+	TN in fac camera: 2
+	FP with available match in fac camera: 1
+	FP with not available match in fac camera: 0
+	FN in fac camera: 3
+
+Current clip: test_40
+
+	Correct matches against esc camera: 6/7
+	Correct matches against fac camera: 3/7
+
+	TP in esc camera: 6
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 1
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 1
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 2
+	FN in fac camera: 1
+
+Current clip: test_41
+
+	Correct matches against esc camera: 7/9
+	Correct matches against fac camera: 5/9
+
+	TP in esc camera: 7
+	TN in esc camera: 0
+	FP with available match in esc camera: 2
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 5
+	TN in fac camera: 2
+	FP with available match in fac camera: 2
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_42
+
+	Correct matches against esc camera: 7/12
+	Correct matches against fac camera: 4/12
+
+	TP in esc camera: 7
+	TN in esc camera: 2
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 1
+	FN in esc camera: 1
+
+	TP in fac camera: 4
+	TN in fac camera: 5
+	FP with available match in fac camera: 1
+	FP with not available match in fac camera: 1
+	FN in fac camera: 1
+
+Current clip: test_43
+
+	Correct matches against esc camera: 6/11
+	Correct matches against fac camera: 0/11
+
+	TP in esc camera: 6
+	TN in esc camera: 2
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 1
+	FN in esc camera: 1
+
+	TP in fac camera: 0
+	TN in fac camera: 10
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 1
+	FN in fac camera: 0
+
+Current clip: test_44
+
+	Correct matches against esc camera: 2/5
+	Correct matches against fac camera: 1/5
+
+	TP in esc camera: 2
+	TN in esc camera: 1
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 1
+	FN in esc camera: 1
+
+	TP in fac camera: 1
+	TN in fac camera: 2
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 1
+	FN in fac camera: 1
+
+Current clip: test_45
+
+	Correct matches against esc camera: 1/3
+	Correct matches against fac camera: 1/3
+
+	TP in esc camera: 1
+	TN in esc camera: 0
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 0
+	FN in esc camera: 1
+
+	TP in fac camera: 1
+	TN in fac camera: 0
+	FP with available match in fac camera: 1
+	FP with not available match in fac camera: 0
+	FN in fac camera: 1
+
+Current clip: test_46
+
+	Correct matches against esc camera: 0/1
+	Correct matches against fac camera: 0/1
+
+	TP in esc camera: 0
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 1
+
+	TP in fac camera: 0
+	TN in fac camera: 0
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 1
+
+Current clip: test_47
+
+	Correct matches against esc camera: 3/5
+	Correct matches against fac camera: 2/5
+
+	TP in esc camera: 3
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 2
+
+	TP in fac camera: 2
+	TN in fac camera: 0
+	FP with available match in fac camera: 3
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_5
+
+	Correct matches against esc camera: 5/6
+	Correct matches against fac camera: 4/6
+
+	TP in esc camera: 5
+	TN in esc camera: 0
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 0
+	FN in esc camera: 0
+
+	TP in fac camera: 4
+	TN in fac camera: 1
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 1
+	FN in fac camera: 0
+
+Current clip: test_6
+
+	Correct matches against esc camera: 3/6
+	Correct matches against fac camera: 3/6
+
+	TP in esc camera: 3
+	TN in esc camera: 0
+	FP with available match in esc camera: 2
+	FP with not available match in esc camera: 1
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 0
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 2
+	FN in fac camera: 1
+
+Current clip: test_7
+
+	Correct matches against esc camera: 2/6
+	Correct matches against fac camera: 1/6
+
+	TP in esc camera: 2
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 1
+	FN in esc camera: 3
+
+	TP in fac camera: 1
+	TN in fac camera: 2
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 1
+	FN in fac camera: 2
+
+Current clip: test_8
+
+	Correct matches against esc camera: 0/2
+	Correct matches against fac camera: 1/2
+
+	TP in esc camera: 0
+	TN in esc camera: 0
+	FP with available match in esc camera: 0
+	FP with not available match in esc camera: 0
+	FN in esc camera: 2
+
+	TP in fac camera: 1
+	TN in fac camera: 1
+	FP with available match in fac camera: 0
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+Current clip: test_9
+
+	Correct matches against esc camera: 3/5
+	Correct matches against fac camera: 3/5
+
+	TP in esc camera: 3
+	TN in esc camera: 0
+	FP with available match in esc camera: 1
+	FP with not available match in esc camera: 1
+	FN in esc camera: 0
+
+	TP in fac camera: 3
+	TN in fac camera: 1
+	FP with available match in fac camera: 1
+	FP with not available match in fac camera: 0
+	FN in fac camera: 0
+
+
+Total TP in esc camera: 168
+Total TN in esc camera: 44
+Total FP with available match in esc camera: 34
+Total FP with not available match in esc camera: 25
+Total FN in esc camera: 28
+
+Total TP in fac camera: 95
+Total TN in fac camera: 111
+Total FP with available match in fac camera: 31
+Total FP with not available match in fac camera: 32
+Total FN in fac camera: 30
