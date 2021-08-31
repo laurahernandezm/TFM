@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 # encoding: utf-8
+"""
+Laura Hernández Muñoz
+
+ReID on abnormal test videos
+"""
 
 import sys
 import os
@@ -7,6 +12,7 @@ import glob
 from os import path as osp
 import cv2
 import torch
+import torch.nn.functional as F
 
 sys.path.append('.')
 
@@ -22,7 +28,9 @@ TEST_SET_FOLDER = DATA + "test_set/"
 # Threshold to consider a matching
 REID_THRES = 0.4
 
+#------------------------------------------------------------------------------#
 # Get normalized images from query and gallery for each test clip
+#------------------------------------------------------------------------------#
 def get_images_from_test_folder(test_folder, cfg):
 
     query = []
@@ -54,27 +62,33 @@ def get_images_from_test_folder(test_folder, cfg):
 
     return query, test_set_esc, test_set_fac
 
+#------------------------------------------------------------------------------#
 # Reshape images
+#------------------------------------------------------------------------------#
 def preprocess(image, cfg):
 
-    # The model expects RGB inputs
+    # The model expects RGB inputs, but we have BGR
     image = image[:, :, ::-1]
 
     # Apply pre-processing to image
-    resized_image = cv2.resize(image, tuple([*cfg.INPUT.SIZE_TEST][::-1]), interpolation = cv2.INTER_CUBIC)
+    resized_image = cv2.resize(image, tuple([*cfg.INPUT.SIZE_TEST][::-1]),
+                                interpolation = cv2.INTER_CUBIC)
 
-    preproc_image = torch.as_tensor(resized_image.astype("float32").transpose(2, 0, 1))[None]
-
-    #preproc_image = preproc_image - (torch.Tensor(cfg.MODEL.PIXEL_MEAN).reshape((1, -1, 1, 1))) / torch.Tensor(cfg.MODEL.PIXEL_STD).reshape((1, -1, 1, 1))
+    preproc_image = torch.as_tensor(resized_image.astype("float32").
+                                                    transpose(2, 0, 1))[None]
 
     return preproc_image
 
+#------------------------------------------------------------------------------#
+# Count how many correct matches we have in each camera
+#------------------------------------------------------------------------------#
 def check_matches(test_folder, sims_esc, sims_fac):
 
     query_ids = []
     correct_matches_esc = []
     correct_matches_fac = []
 
+    # Save query images ID
     for test in sorted(os.listdir(QUERY_FOLDER)):
         if test == test_folder:
             for img in sorted(os.listdir(osp.join(QUERY_FOLDER, test))):
@@ -87,18 +101,36 @@ def check_matches(test_folder, sims_esc, sims_fac):
                 imgs = sorted(os.listdir(osp.join(TEST_SET_FOLDER, test, cam)))
                 for index in range(len(query_ids)):
                     if cam == "esc":
-                        if sims_esc[index] != -1 and query_ids[index] == imgs[sims_esc[index]].split("-")[0][4:]:
+                        # If cosine similarity is higher than REID_THRES and the
+                        # IDs match, we have a correct match
+                        if sims_esc[index] != -1 and query_ids[index] == \
+                        imgs[sims_esc[index]].split("-")[0][4:]:
                             correct_matches_esc.append(True)
                         else:
                             correct_matches_esc.append(False)
                     else:
-                        if sims_fac[index] != -1 and query_ids[index] == imgs[sims_fac[index]].split("-")[0][4:]:
+                        if sims_fac[index] != -1 and query_ids[index] == \
+                        imgs[sims_fac[index]].split("-")[0][4:]:
                             correct_matches_fac.append(True)
                         else:
                             correct_matches_fac.append(False)
 
     return correct_matches_esc, correct_matches_fac
 
+#------------------------------------------------------------------------------#
+# Compute TP, TN, FN and FP (with available and not available matches) for each
+# camera
+# TP == cosine similarity >= REID_THRES and IDs from query and the match are the
+#       same (tp_x)
+# TN == cosine similarity < REID_THRES and there is no possible match between
+#       query and the current camera (tn_x)
+# FN == cosine similarity < REID_THRES and there is possible match between query
+#       and the current camera (fn_x)
+# FP == cosine similarity >= REID_THRES and IDs from query and the match are not
+#       the same. We distinguish two possibilities:
+#           - The real match is available (fp_av_x)
+#           - There is no real match available (fp_not_av_x)
+#------------------------------------------------------------------------------#
 def confusion_matrix(test_folder, sims_esc, sims_fac):
 
     query_ids = []
@@ -117,12 +149,14 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
     fp_av_fac = 0
     fn_fac = 0
 
+    # Save query images ID
     for test in sorted(os.listdir(QUERY_FOLDER)):
         if test == test_folder:
             for img in sorted(os.listdir(osp.join(QUERY_FOLDER, test))):
                 id = img.split("-")[0][4:]
                 query_ids.append(id)
 
+    # Save gallery images ID
     for test in sorted(os.listdir(TEST_SET_FOLDER)):
         if test == test_folder:
             for cam in os.listdir(osp.join(TEST_SET_FOLDER, test)):
@@ -133,6 +167,7 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
                     else:
                         fac_ids.append(id)
 
+    # Compute TP, TN, FN and FP for esc and fac cameras
     for test in sorted(os.listdir(TEST_SET_FOLDER)):
         if test == test_folder:
             for cam in os.listdir(osp.join(TEST_SET_FOLDER, test)):
@@ -179,8 +214,13 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
     print("\tFP with not available match in fac camera: " + str(fp_not_av_fac))
     print("\tFN in fac camera: " + str(fn_fac))
 
-    return tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, fp_av_fac, fp_not_av_fac, fn_fac
+    return tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, \
+    fp_av_fac, fp_not_av_fac, fn_fac
 
+#------------------------------------------------------------------------------#
+# Get best saved model, extract features from query and gallery, compute cosine
+# similarity and check if matches are correct
+#------------------------------------------------------------------------------#
 def main():
 
     # Get configuration from file
@@ -194,11 +234,6 @@ def main():
     # Disable all training options
     model.eval()
 
-    total_esc = 0
-    total_matches_esc = 0
-    total_fac = 0
-    total_matches_fac = 0
-
     total_tp_esc = 0
     total_tn_esc = 0
     total_fp_not_av_esc = 0
@@ -211,18 +246,20 @@ def main():
     total_fp_av_fac = 0
     total_fn_fac = 0
 
-    # Test
+    # For each test video
     for test_clip in sorted(os.listdir(QUERY_FOLDER)):
+
+        # Get images
         query, test_esc, test_fac = get_images_from_test_folder(test_clip, cfg)
-        
+
         print("\nCurrent clip: " + str(test_clip))
-        
+
         # To tensor
         query_tensor = torch.cat(query)
         test_esc_tensor = torch.cat(test_esc)
         test_fac_tensor = torch.cat(test_fac)
 
-        # Get features
+        # Send images to GPU and get their features
         query_tensor = query_tensor.to('cuda:0')
         test_esc_tensor = test_esc_tensor.to('cuda:0')
         test_fac_tensor = test_fac_tensor.to('cuda:0')
@@ -235,10 +272,13 @@ def main():
         for query_feat_vector in features_query:
             cos_sims = []
             for esc_feat_vector in features_test_esc:
-                cos = torch.nn.functional.cosine_similarity(torch.nn.functional.normalize(query_feat_vector, dim = -1), torch.nn.functional.normalize(esc_feat_vector, dim = -1), dim = 0)
+                cos = F.cosine_similarity(F.normalize(query_feat_vector, dim = -1),
+                                        F.normalize(esc_feat_vector, dim = -1),
+                                        dim = 0)
                 cos_sims.append(cos.item())
 
-            # Get more similar item and save it if its cosine similarity is above the threshold
+            # Get more similar item and save it if its cosine similarity is
+            # above the threshold
             max_sim = max(cos_sims)
             if max_sim >= REID_THRES:
                 max_cos_sims_esc.append(cos_sims.index(max_sim))
@@ -250,28 +290,33 @@ def main():
         for query_feat_vector in features_query:
             cos_sims = []
             for fac_feat_vector in features_test_fac:
-                cos = torch.nn.functional.cosine_similarity(torch.nn.functional.normalize(query_feat_vector, dim = -1), torch.nn.functional.normalize(fac_feat_vector, dim = -1), dim = 0)
+                cos = F.cosine_similarity(F.normalize(query_feat_vector, dim = -1),
+                                        F.normalize(fac_feat_vector, dim = -1),
+                                        dim = 0)
                 cos_sims.append(cos.item())
 
-            # Get more similar item and save it if its cosine similarity is above the threshold
+            # Get more similar item and save it if its cosine similarity is
+            # above the threshold
             max_sim = max(cos_sims)
             if max_sim >= REID_THRES:
                 max_cos_sims_fac.append(cos_sims.index(max_sim))
             else:
                 max_cos_sims_fac.append(-1)
 
+        # Count how many correct matches there is between query and each camera
         correct_esc, correct_fac = check_matches(test_clip, max_cos_sims_esc, max_cos_sims_fac)
 
-        print("\n\tCorrect matches against esc camera: " + str(sum(correct_esc)) + "/" + str(len(correct_esc)))
-        print("\tCorrect matches against fac camera: " + str(sum(correct_fac)) + "/" + str(len(correct_fac)))
+        print("\n\tCorrect matches against esc camera: " +
+                str(sum(correct_esc)) + "/" + str(len(correct_esc)))
+        print("\tCorrect matches against fac camera: " +
+                str(sum(correct_fac)) + "/" + str(len(correct_fac)))
 
-        total_esc += len(correct_esc)
-        total_matches_esc += sum(correct_esc)
-        total_fac += len(correct_fac)
-        total_matches_fac += sum(correct_fac)
+        # Get TP, TN, FN and FP from each camera
+        tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, \
+        fp_av_fac, fp_not_av_fac, fn_fac = confusion_matrix(test_clip, \
+                                            max_cos_sims_esc, max_cos_sims_fac)
 
-        tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, fp_av_fac, fp_not_av_fac, fn_fac = confusion_matrix(test_clip, max_cos_sims_esc, max_cos_sims_fac)
-
+        # Compute total number of TP, TN, FN and FP
         total_tp_esc += tp_esc
         total_tn_esc += tn_esc
         total_fp_not_av_esc += fp_not_av_esc
@@ -298,3 +343,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
