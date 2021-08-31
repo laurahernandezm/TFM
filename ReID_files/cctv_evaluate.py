@@ -21,7 +21,8 @@ from fastreid.engine import DefaultTrainer
 from fastreid.utils.checkpoint import Checkpointer
 
 # Path to the data
-DATA = '/mnt/sdd2/herta_aimars/datasets-reid/abnormal_identities/'
+ROOT = '/mnt/sdd2/herta_aimars/'
+DATA = ROOT + 'datasets-reid/abnormal_identities/'
 QUERY_FOLDER = DATA + "query/"
 TEST_SET_FOLDER = DATA + "test_set/"
 
@@ -167,6 +168,10 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
                     else:
                         fac_ids.append(id)
 
+    # Lists to store the path of the correct matches for facial recognition
+    esc_matches_paths = []
+    fac_matches_paths = []
+
     # Compute TP, TN, FN and FP for esc and fac cameras
     for test in sorted(os.listdir(TEST_SET_FOLDER)):
         if test == test_folder:
@@ -182,6 +187,7 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
                         else:
                             if query_ids[index] == imgs[sims_esc[index]].split("-")[0][4:]:
                                 tp_esc += 1
+                                esc_matches_paths.append(osp.join(TEST_SET_FOLDER, test, cam, imgs[sims_esc[index]]))
                             else:
                                 if query_ids[index] in esc_ids:
                                     fp_av_esc += 1
@@ -196,6 +202,7 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
                         else:
                             if query_ids[index] == imgs[sims_fac[index]].split("-")[0][4:]:
                                 tp_fac += 1
+                                fac_matches_paths.append(osp.join(TEST_SET_FOLDER, test, cam, imgs[sims_fac[index]]))
                             else:
                                 if query_ids[index] in fac_ids:
                                     fp_av_fac += 1
@@ -215,7 +222,7 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
     print("\tFN in fac camera: " + str(fn_fac))
 
     return tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, \
-    fp_av_fac, fp_not_av_fac, fn_fac
+    fp_av_fac, fp_not_av_fac, fn_fac, esc_matches_paths, fac_matches_paths
 
 #------------------------------------------------------------------------------#
 # Get best saved model, extract features from query and gallery, compute cosine
@@ -245,6 +252,9 @@ def main():
     total_fp_not_av_fac = 0
     total_fp_av_fac = 0
     total_fn_fac = 0
+
+    esc_facial_paths = []
+    fac_facial_paths = []
 
     # For each test video
     for test_clip in sorted(os.listdir(QUERY_FOLDER)):
@@ -313,8 +323,8 @@ def main():
 
         # Get TP, TN, FN and FP from each camera
         tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, \
-        fp_av_fac, fp_not_av_fac, fn_fac = confusion_matrix(test_clip, \
-                                            max_cos_sims_esc, max_cos_sims_fac)
+        fp_av_fac, fp_not_av_fac, fn_fac, esc_matches_paths, \
+        fac_matches_paths = confusion_matrix(test_clip, max_cos_sims_esc, max_cos_sims_fac)
 
         # Compute total number of TP, TN, FN and FP
         total_tp_esc += tp_esc
@@ -329,6 +339,10 @@ def main():
         total_fp_av_fac += fp_av_fac
         total_fn_fac += fn_fac
 
+        # Save paths of the correct matches to send them to facial recognition module
+        esc_facial_paths.extend(esc_matches_paths)
+        fac_facial_paths.extend(fac_matches_paths)
+
     print("\n\nTotal TP in esc camera: " + str(total_tp_esc))
     print("Total TN in esc camera: " + str(total_tn_esc))
     print("Total FP with available match in esc camera: " + str(total_fp_av_esc))
@@ -340,6 +354,17 @@ def main():
     print("Total FP with available match in fac camera: " + str(total_fp_av_fac))
     print("Total FP with not available match in fac camera: " + str(total_fp_not_av_fac))
     print("Total FN in fac camera: " + str(total_fn_fac))
+
+    # Write paths of esc and fac images for facial recognition
+    esc_file = ROOT + "esc_facial_paths.txt"
+    with open(esc_file, 'w+') as file:
+        for clip_paths in esc_facial_paths:
+            file.write(str(clip_paths) + "\n")
+
+    fac_file = ROOT + "fac_facial_paths.txt"
+    with open(fac_file, 'w+') as file:
+        for clip_paths in fac_facial_paths:
+            file.write(str(clip_paths) + "\n")
 
 if __name__ == '__main__':
     main()
