@@ -172,6 +172,10 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
     esc_matches_paths = []
     fac_matches_paths = []
 
+    # Lists to store the path of false positive matches for facial recognition
+    esc_FP_matches_paths = []
+    fac_FP_matches_paths = []
+
     # Compute TP, TN, FN and FP for esc and fac cameras
     for test in sorted(os.listdir(TEST_SET_FOLDER)):
         if test == test_folder:
@@ -193,6 +197,8 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
                                     fp_av_esc += 1
                                 else:
                                     fp_not_av_esc += 1
+
+                                esc_FP_matches_paths.append(osp.join(TEST_SET_FOLDER, test, cam, imgs[sims_esc[index]]))
                     else:
                         if sims_fac[index] == -1:
                             if query_ids[index] in fac_ids:
@@ -209,6 +215,8 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
                                 else:
                                     fp_not_av_fac += 1
 
+                                fac_FP_matches_paths.append(osp.join(TEST_SET_FOLDER, test, cam, imgs[sims_fac[index]]))
+
     print("\n\tTP in esc camera: " + str(tp_esc))
     print("\tTN in esc camera: " + str(tn_esc))
     print("\tFP with available match in esc camera: " + str(fp_av_esc))
@@ -222,7 +230,8 @@ def confusion_matrix(test_folder, sims_esc, sims_fac):
     print("\tFN in fac camera: " + str(fn_fac))
 
     return tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, \
-    fp_av_fac, fp_not_av_fac, fn_fac, esc_matches_paths, fac_matches_paths
+    fp_av_fac, fp_not_av_fac, fn_fac, esc_matches_paths, fac_matches_paths, \
+    esc_FP_matches_paths, fac_FP_matches_paths
 
 #------------------------------------------------------------------------------#
 # Get best saved model, extract features from query and gallery, compute cosine
@@ -255,6 +264,9 @@ def main():
 
     esc_facial_paths = []
     fac_facial_paths = []
+
+    esc_FP_facial_paths = []
+    fac_FP_facial_paths = []
 
     # For each test video
     for test_clip in sorted(os.listdir(QUERY_FOLDER)):
@@ -324,7 +336,8 @@ def main():
         # Get TP, TN, FN and FP from each camera
         tp_esc, tn_esc, fp_av_esc, fp_not_av_esc, fn_esc, tp_fac, tn_fac, \
         fp_av_fac, fp_not_av_fac, fn_fac, esc_matches_paths, \
-        fac_matches_paths = confusion_matrix(test_clip, max_cos_sims_esc, max_cos_sims_fac)
+        fac_matches_paths, esc_FP_matches_paths, fac_FP_matches_paths = \
+        confusion_matrix(test_clip, max_cos_sims_esc, max_cos_sims_fac)
 
         # Compute total number of TP, TN, FN and FP
         total_tp_esc += tp_esc
@@ -342,6 +355,10 @@ def main():
         # Save paths of the correct matches to send them to facial recognition module
         esc_facial_paths.extend(esc_matches_paths)
         fac_facial_paths.extend(fac_matches_paths)
+
+        # Save paths of the false positive matches to send them to facial recognition module
+        esc_FP_facial_paths.extend(esc_FP_matches_paths)
+        fac_FP_facial_paths.extend(fac_FP_matches_paths)
 
     print("\n\nTotal TP in esc camera: " + str(total_tp_esc))
     print("Total TN in esc camera: " + str(total_tn_esc))
@@ -364,6 +381,16 @@ def main():
     fac_file = ROOT + "fac_facial_paths.txt"
     with open(fac_file, 'w+') as file:
         for clip_paths in fac_facial_paths:
+            file.write(str(clip_paths) + "\n")
+
+    esc_FP_file = ROOT + "esc_FP_facial_paths.txt"
+    with open(esc_FP_file, 'w+') as file:
+        for clip_paths in esc_FP_facial_paths:
+            file.write(str(clip_paths) + "\n")
+
+    fac_FP_file = ROOT + "fac_FP_facial_paths.txt"
+    with open(fac_FP_file, 'w+') as file:
+        for clip_paths in fac_FP_facial_paths:
             file.write(str(clip_paths) + "\n")
 
 if __name__ == '__main__':

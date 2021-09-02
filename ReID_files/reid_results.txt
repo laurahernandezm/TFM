@@ -275,7 +275,7 @@ Current clip: test_23
 Current clip: test_24
 
 	Correct matches against esc camera: 4/7
-	Correct matches against fac camera: 1/7
+	Correct matches against fac camera: 2/7
 
 	TP in esc camera: 4
 	TN in esc camera: 2
@@ -283,9 +283,9 @@ Current clip: test_24
 	FP with not available match in esc camera: 0
 	FN in esc camera: 0
 
-	TP in fac camera: 1
+	TP in fac camera: 2
 	TN in fac camera: 4
-	FP with available match in fac camera: 2
+	FP with available match in fac camera: 1
 	FP with not available match in fac camera: 0
 	FN in fac camera: 0
 
@@ -806,8 +806,8 @@ Total FP with available match in esc camera: 34
 Total FP with not available match in esc camera: 25
 Total FN in esc camera: 28
 
-Total TP in fac camera: 95
+Total TP in fac camera: 96
 Total TN in fac camera: 111
-Total FP with available match in fac camera: 31
+Total FP with available match in fac camera: 30
 Total FP with not available match in fac camera: 32
 Total FN in fac camera: 30
