@@ -330,9 +330,9 @@ Current clip: test_27
 
 	TP in esc camera: 3
 	TN in esc camera: 2
-	FP with available match in esc camera: 2
+	FP with available match in esc camera: 1
 	FP with not available match in esc camera: 0
-	FN in esc camera: 1
+	FN in esc camera: 2
 
 	TP in fac camera: 1
 	TN in fac camera: 5
@@ -802,9 +802,9 @@ Current clip: test_9
 
 Total TP in esc camera: 168
 Total TN in esc camera: 44
-Total FP with available match in esc camera: 34
+Total FP with available match in esc camera: 33
 Total FP with not available match in esc camera: 25
-Total FN in esc camera: 28
+Total FN in esc camera: 29
 
 Total TP in fac camera: 96
 Total TN in fac camera: 111
