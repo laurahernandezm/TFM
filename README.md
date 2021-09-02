@@ -116,8 +116,4 @@ Asimismo, también se incluye el archivo necesario para procesar el conjunto de 
 
 ## Estructura de la carpeta Facial_files
 
-Para el reconocimiento facial se ha usado el SDK Herta Connect, de la empresa [Herta](https://hertasecurity.com/es/).
-
-### facial_reid.py
-
-Script utilizado para enviar las imágenes y procesar los resultados de reconocimiento facial.
+Para el reconocimiento facial se ha usado el SDK Herta Connect, de la empresa [Herta](https://hertasecurity.com/es/). En esta carpeta tenemos el script utilizado para enviar las imágenes y procesar los resultados de reconocimiento facial (**facial_reid.py**) y los archivos con los resultados (**facial_results_TP.txt** y **facial_results_FP.txt**).
