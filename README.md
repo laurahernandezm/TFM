@@ -102,7 +102,7 @@ Para generar los mismos resultados mostrados en el trabajo (relativos al dataset
 
 ## Estructura de la carpeta ReID_files
 
-Para la parte de reidentificación de individuos, se han seguido las instrucciones de instalación (https://github.com/JDAI-CV/fast-reid/blob/master/INSTALL.md#installation) y utilización (https://github.com/JDAI-CV/fast-reid/blob/master/GETTING_STARTED.md#getting-started-with-fastreid) disponibles en el repositorio de [FastReID](https://github.com/JDAI-CV/fast-reid). 
+Para la parte de reidentificación de individuos se han seguido las instrucciones de instalación (https://github.com/JDAI-CV/fast-reid/blob/master/INSTALL.md#installation) y utilización (https://github.com/JDAI-CV/fast-reid/blob/master/GETTING_STARTED.md#getting-started-with-fastreid) disponibles en el repositorio de [FastReID](https://github.com/JDAI-CV/fast-reid). 
 
 ### Market1501
 
@@ -113,3 +113,11 @@ En este directorio están disponibles los archivos de configuración .yml utiliz
 En esta carpeta tenemos el archivo .yml que hemos usado para realizar el fine tuning con nuestro conjunto de datos, ejecución cuyos resultados están en la memoria.
 
 Asimismo, también se incluye el archivo necesario para procesar el conjunto de datos CCTV (**cctv.py**), que se encontraría en la carpeta **fastreid/data/datasets/** del repositorio de FastReID, el script utilizado para evaluar el modelo seleccionado con los datos de test (**cctv_evaluate.py**), que se encontraría en la carpeta **tools/**, y los resultados de la reidentificación (**reid_results.txt**).
+
+## Estructura de la carpeta Facial_files
+
+Para el reconocimiento facial se ha usado el SDK Herta Connect, de la empresa [Herta](https://hertasecurity.com/es/).
+
+### facial_reid.py
+
+Script utilizado para enviar las imágenes y procesar los resultados de reconocimiento facial.
