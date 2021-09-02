@@ -1,0 +1,16 @@
+RESULTS IN FACIAL CAMERA:
+Total number of images: 87
+Number of images without faces: 23
+Number of images to evaluate: 64
+Number of correct matches: 15 (23.4375 % of images with faces)
+Number of incorrect matches: 16 (25.0 % of images with faces)
+Number of weak predictions: 31 (48.4375 % of images with faces)
+Number of not available identities: 2 (3.125 % of images with faces)
+RESULTS IN LADDERS CAMERA:
+Total number of images: 154
+Number of images without faces: 85
+Number of images to evaluate: 69
+Number of correct matches: 6 (8.695652173913043 % of images with faces)
+Number of incorrect matches: 16 (23.18840579710145 % of images with faces)
+Number of weak predictions: 39 (56.52173913043478 % of images with faces)
+Number of not available identities: 8 (11.594202898550725 % of images with faces)
