@@ -15,7 +15,7 @@ import os
 available_identities = ['alberto', 'carlos', 'german', 'jesus', 'jose', 'juanlu', 'laura', 'nacho', 'nuria', 'paco']
 
 # Mean scores lesser than this value are discarded
-SCORE_THRESHOLD = 0.2
+SCORE_THRESHOLD = 0.1
 
 # Possible voting schemes: sum (sum scores from each identity and choose the
 # higher result) and count (choose the most repeated)
@@ -25,7 +25,7 @@ VOTING_TYPE = 'sum'
 NUM_PREDICTIONS = None
 
 # Folder with the query images
-IMAGES_FOLDER = 'facial_imgs_FP'
+IMAGES_FOLDER = 'facial_imgs'
 
 #------------------------------------------------------------------------------#
 # Send an image through the socket
